@@ -859,7 +859,7 @@ h3{font-family:'Fraunces',serif;font-size:19px;font-weight:500;line-height:1.3}
 <!-- ════════════════════════════════════════
      HOME
 ════════════════════════════════════════ -->
-<div id="screen-home">
+<div id="screen-home" style="display:none">
   <div class="home-header fade-up">
     <div>
       <div class="home-greet-sub" id="greet-time">Good morning</div>
@@ -1207,9 +1207,15 @@ const OB_STEPS = [
 // ═══════════════════════════════════════════
 function showScreen(id){
   ['onboard','permission','home','challenge','celebrate','pro','feed','profile']
-    .forEach(s=>{ const el=document.getElementById('screen-'+s); if(el){el.style.display='none'} });
+    .forEach(s=>{
+      const el=document.getElementById('screen-'+s);
+      if(el){ el.style.display='none'; el.classList.add('hidden'); }
+    });
   const target = document.getElementById('screen-'+id);
-  if(target){ target.style.display = (id==='challenge')?'flex':'block'; }
+  if(target){
+    target.classList.remove('hidden');
+    target.style.display = (id==='challenge')?'flex':'block';
+  }
   const nav = document.getElementById('bottom-nav');
   const showNav = ['home','feed','profile'].includes(id);
   nav.classList.toggle('hidden',!showNav);
@@ -1257,7 +1263,8 @@ function obNext(){
     state.obStep++;
     renderObStep();
   } else {
-    showScreen('permission');
+    // Go straight to the app — notification permission is requested inline
+    finishOnboarding();
   }
 }
 
@@ -1327,10 +1334,12 @@ function finishOnboarding(){
   renderProfile();
   showScreen('home');
   switchTab('home');
-  // Simulate notification after delay
-  setTimeout(()=>{
-    showToast('⚡','Your daily Spark is ready!','Tap to see today\'s challenge');
-  }, 3000);
+  setTimeout(async ()=>{
+    if('Notification' in window && Notification.permission === 'default'){
+      try{ await Notification.requestPermission(); }catch(e){}
+    }
+    showToast('⚡','Your first Spark is ready!','Tap the card below to begin 🔥');
+  }, 1500);
 }
 
 function updateGreeting(){
@@ -1660,7 +1669,8 @@ function renderProfile(){
 function switchTab(tab){
   state.currentTab=tab;
   ['home','feed','profile'].forEach(t=>{
-    document.getElementById('nav-'+t)?.classList.toggle('active',t===tab);
+    const navEl = document.getElementById('nav-'+t);
+    if(navEl) navEl.classList.toggle('active',t===tab);
   });
   showScreen(tab);
   if(tab==='profile') renderProfile();
