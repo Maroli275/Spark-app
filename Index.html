@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<meta name="theme-color" content="#0F0F0E"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Spark"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="application-name" content="Spark"/>
+<meta name="description" content="5 minutes. Something real. Every day. Break the scroll with daily micro-challenges."/>
+<link rel="manifest" href="manifest.json"/>
+<!-- iOS home screen icon (inline SVG as data URI so no extra files needed) -->
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='112' fill='%230F0F0E'/><text y='340' x='256' text-anchor='middle' font-size='280' font-family='serif'>⚡</text></svg>"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230F0F0E'/><text y='24' x='16' text-anchor='middle' font-size='20' font-family='serif'>⚡</text></svg>"/>
+<title>Spark — 5 minutes. Something real. Every day.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --ink:#0F0F0E;
+  --paper:#F7F6F2;
+  --cream:#FEFCF7;
+  --border:#E8E4DC;
+  --muted:#9A9590;
+  --fire:#FF4D1C;
+  --fire-soft:#FFF0EC;
+  --gold:#F5A623;
+  --gold-soft:#FFFBF0;
+  --sage:#4A9B7F;
+  --sage-soft:#F0FAF6;
+  --iris:#7C6FF7;
+  --iris-soft:#F4F3FF;
+  --r:22px;
+  --rr:14px;
+  --sh:0 2px 20px rgba(15,15,14,.07);
+  --sh-lg:0 8px 48px rgba(15,15,14,.14);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  font-family:'Instrument Sans',sans-serif;
+  color:var(--ink);
+  min-height:100vh;
+  overscroll-behavior:none;
+}
+.app{
+  max-width:440px;
+  margin:0 auto;
+  min-height:100vh;
+  position:relative;
+  background:var(--paper);
+  overflow:hidden;
+}
+
+/* ═══════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════ */
+.serif{font-family:'Fraunces',serif}
+h1{font-family:'Fraunces',serif;font-size:clamp(32px,8vw,42px);font-weight:900;line-height:1.05;letter-spacing:-1.5px}
+h2{font-family:'Fraunces',serif;font-size:24px;font-weight:700;line-height:1.2;letter-spacing:-.5px}
+h3{font-family:'Fraunces',serif;font-size:19px;font-weight:500;line-height:1.3}
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pop{0%{transform:scale(.85);opacity:0}60%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes streakBounce{0%,100%{transform:translateY(0)}40%{transform:translateY(-8px)}70%{transform:translateY(-3px)}}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+@keyframes xpFill{from{width:0%}to{width:var(--fill)}}
+@keyframes dotPulse{0%,80%,100%{transform:scale(.7);opacity:.4}40%{transform:scale(1);opacity:1}}
+@keyframes notifSlide{0%{transform:translateY(-100%);opacity:0}15%{transform:translateY(0);opacity:1}80%{transform:translateY(0);opacity:1}100%{transform:translateY(-100%);opacity:0}}
+@keyframes glow{0%,100%{box-shadow:0 0 20px rgba(255,77,28,.3)}50%{box-shadow:0 0 40px rgba(255,77,28,.6)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes orbMove{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.1)}66%{transform:translate(-20px,15px) scale(.95)}}
+
+.fade-up{animation:fadeUp .45s cubic-bezier(.22,.68,0,1.2) forwards}
+.fade-up-1{animation:fadeUp .45s .08s cubic-bezier(.22,.68,0,1.2) both}
+.fade-up-2{animation:fadeUp .45s .16s cubic-bezier(.22,.68,0,1.2) both}
+.fade-up-3{animation:fadeUp .45s .24s cubic-bezier(.22,.68,0,1.2) both}
+.fade-up-4{animation:fadeUp .45s .32s cubic-bezier(.22,.68,0,1.2) both}
+.fade-up-5{animation:fadeUp .45s .40s cubic-bezier(.22,.68,0,1.2) both}
+
+/* ═══════════════════════════════════════════
+   NOTIFICATION TOAST
+═══════════════════════════════════════════ */
+.notif-toast{
+  position:fixed;top:0;left:50%;transform:translateX(-50%);
+  z-index:9999;
+  background:var(--ink);color:white;
+  padding:14px 20px;border-radius:0 0 18px 18px;
+  max-width:440px;width:100%;
+  display:flex;align-items:center;gap:12px;
+  animation:notifSlide 4s ease forwards;
+  box-shadow:0 8px 32px rgba(0,0,0,.25);
+}
+.notif-icon{font-size:24px;flex-shrink:0}
+.notif-content{flex:1}
+.notif-title{font-weight:600;font-size:14px;margin-bottom:2px}
+.notif-body{font-size:12px;color:rgba(255,255,255,.65)}
+.notif-close{font-size:18px;cursor:pointer;opacity:.5;flex-shrink:0}
+
+/* ═══════════════════════════════════════════
+   ONBOARDING
+═══════════════════════════════════════════ */
+#screen-onboard{
+  min-height:100vh;
+  background:var(--ink);
+  color:white;
+  display:flex;flex-direction:column;
+  padding:56px 28px 48px;
+  position:relative;overflow:hidden;
+}
+.onboard-orb{
+  position:absolute;border-radius:50%;
+  animation:orbMove 8s ease-in-out infinite;
+}
+.onboard-orb-1{width:280px;height:280px;top:-80px;right:-60px;background:radial-gradient(circle,rgba(255,77,28,.35),transparent 70%)}
+.onboard-orb-2{width:220px;height:220px;bottom:-40px;left:-60px;background:radial-gradient(circle,rgba(245,166,35,.25),transparent 70%);animation-delay:-3s}
+.onboard-orb-3{width:160px;height:160px;top:40%;left:60%;background:radial-gradient(circle,rgba(124,111,247,.2),transparent 70%);animation-delay:-5s}
+
+.spark-wordmark{
+  font-family:'Fraunces',serif;
+  font-size:48px;font-weight:900;
+  letter-spacing:-2px;line-height:1;
+  margin-bottom:6px;position:relative;z-index:1;
+}
+.spark-wordmark em{color:var(--fire);font-style:normal}
+.spark-tagline{font-size:14px;color:rgba(255,255,255,.5);font-weight:300;margin-bottom:52px;position:relative;z-index:1}
+
+.progress-track{display:flex;gap:6px;margin-bottom:36px;position:relative;z-index:1}
+.progress-seg{height:3px;border-radius:99px;background:rgba(255,255,255,.15);transition:all .4s ease}
+.progress-seg.done{background:var(--fire)}
+.progress-seg.active{background:var(--fire);flex:2}
+
+.onboard-step{flex:1;position:relative;z-index:1}
+.onboard-q{
+  font-family:'Fraunces',serif;
+  font-size:clamp(24px,6vw,30px);
+  font-weight:600;line-height:1.25;
+  margin-bottom:28px;
+}
+.onboard-opts{display:flex;flex-direction:column;gap:11px}
+.onboard-opt{
+  background:rgba(255,255,255,.07);
+  border:1.5px solid rgba(255,255,255,.1);
+  border-radius:16px;padding:15px 18px;
+  cursor:pointer;display:flex;align-items:center;gap:14px;
+  transition:all .2s;font-size:14px;font-weight:400;color:white;
+}
+.onboard-opt:active{transform:scale(.98)}
+.onboard-opt.sel{background:rgba(255,77,28,.2);border-color:var(--fire)}
+.onboard-opt-em{font-size:24px;flex-shrink:0}
+.onboard-opt-txt{flex:1}
+.onboard-opt-check{
+  width:22px;height:22px;border-radius:50%;
+  background:var(--fire);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;flex-shrink:0;
+  opacity:0;transition:opacity .2s;
+}
+.onboard-opt.sel .onboard-opt-check{opacity:1}
+
+.cta-btn{
+  background:var(--fire);color:white;
+  border:none;border-radius:18px;
+  padding:19px 24px;font-size:16px;font-weight:600;
+  cursor:pointer;width:100%;margin-top:28px;
+  font-family:'Instrument Sans',sans-serif;
+  transition:all .2s;position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.cta-btn:hover{background:#e63c12;transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,77,28,.4)}
+.cta-btn:active{transform:translateY(0)}
+.cta-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* ═══════════════════════════════════════════
+   PERMISSION SCREEN
+═══════════════════════════════════════════ */
+#screen-permission{
+  min-height:100vh;
+  background:var(--ink);color:white;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:48px 28px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.perm-graphic{
+  width:120px;height:120px;
+  background:rgba(255,77,28,.15);
+  border:2px solid rgba(255,77,28,.3);
+  border-radius:32px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:56px;margin-bottom:28px;
+  animation:float 3s ease-in-out infinite;
+}
+.perm-title{font-family:'Fraunces',serif;font-size:30px;font-weight:700;margin-bottom:12px;line-height:1.2}
+.perm-sub{font-size:15px;color:rgba(255,255,255,.55);margin-bottom:36px;line-height:1.6;max-width:300px}
+.perm-features{display:flex;flex-direction:column;gap:12px;width:100%;margin-bottom:36px}
+.perm-feat{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
+  border-radius:14px;padding:14px 18px;
+  display:flex;align-items:center;gap:12px;text-align:left;
+}
+.perm-feat-icon{font-size:20px;flex-shrink:0}
+.perm-feat-text{font-size:13px;color:rgba(255,255,255,.75)}
+.perm-skip{background:none;border:none;color:rgba(255,255,255,.35);font-size:13px;cursor:pointer;margin-top:8px;font-family:'Instrument Sans',sans-serif}
+
+/* ═══════════════════════════════════════════
+   BOTTOM NAV
+═══════════════════════════════════════════ */
+.bottom-nav{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:440px;
+  background:rgba(247,246,242,.92);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);
+  display:flex;padding:8px 0 max(16px,env(safe-area-inset-bottom));
+  z-index:200;
+}
+.nav-tab{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  gap:3px;cursor:pointer;padding:6px 0;position:relative;
+  transition:all .2s;
+}
+.nav-tab-icon{font-size:22px;transition:transform .2s}
+.nav-tab:active .nav-tab-icon{transform:scale(.88)}
+.nav-tab-label{font-size:10px;font-weight:500;color:var(--muted);transition:color .2s}
+.nav-tab.active .nav-tab-label{color:var(--fire)}
+.nav-tab-dot{
+  width:4px;height:4px;border-radius:50%;
+  background:var(--fire);margin-top:1px;
+  opacity:0;transition:opacity .2s;
+}
+.nav-tab.active .nav-tab-dot{opacity:1}
+
+/* ═══════════════════════════════════════════
+   HOME
+═══════════════════════════════════════════ */
+#screen-home{padding:52px 22px 100px;display:none}
+
+.home-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px}
+.home-greet-sub{font-size:12px;color:var(--muted);font-weight:500;letter-spacing:.5px;text-transform:uppercase;margin-bottom:5px}
+.home-greet{font-family:'Fraunces',serif;font-size:27px;font-weight:700;line-height:1.2}
+.home-greet em{color:var(--fire);font-style:italic}
+
+.streak-pill{
+  display:flex;align-items:center;gap:5px;
+  background:var(--fire-soft);border:1.5px solid rgba(255,77,28,.2);
+  padding:8px 14px;border-radius:99px;
+  font-size:14px;font-weight:700;color:var(--fire);
+  white-space:nowrap;cursor:pointer;
+  animation:glow 3s ease-in-out infinite;
+  transition:transform .2s;
+}
+.streak-pill:hover{transform:scale(1.04)}
+.streak-flame{animation:streakBounce 1.5s ease-in-out infinite}
+
+/* Hero Challenge Card */
+.hero-card{
+  border-radius:24px;
+  padding:0;margin-bottom:18px;
+  cursor:pointer;overflow:hidden;
+  box-shadow:var(--sh-lg);
+  transition:transform .25s,box-shadow .25s;
+  position:relative;
+}
+.hero-card:hover{transform:translateY(-4px);box-shadow:0 16px 60px rgba(15,15,14,.2)}
+.hero-card:active{transform:translateY(-1px)}
+.hero-card-inner{
+  background:var(--ink);
+  padding:28px 24px 80px;
+  position:relative;overflow:hidden;
+  min-height:210px;
+}
+.hero-orb{
+  position:absolute;border-radius:50%;
+  animation:orbMove 10s ease-in-out infinite;
+}
+.hero-orb-1{width:220px;height:220px;top:-80px;right:-60px;opacity:.35}
+.hero-orb-2{width:160px;height:160px;bottom:-60px;left:-40px;opacity:.2;animation-delay:-4s}
+.hero-content{position:relative;z-index:2}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.12);
+  border-radius:99px;padding:5px 13px;
+  font-size:12px;color:rgba(255,255,255,.8);font-weight:500;
+  margin-bottom:14px;
+}
+.hero-day-label{
+  font-size:11px;font-weight:600;letter-spacing:1.5px;
+  text-transform:uppercase;color:rgba(255,255,255,.4);
+  margin-bottom:4px;
+}
+.hero-title{
+  font-family:'Fraunces',serif;
+  font-size:clamp(26px,7vw,32px);font-weight:800;
+  color:white;line-height:1.15;margin-bottom:10px;
+}
+.hero-duration{font-size:13px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:5px}
+.hero-cta{
+  position:absolute;bottom:22px;right:22px;
+  background:white;color:var(--ink);
+  border-radius:99px;padding:10px 20px;
+  font-size:13px;font-weight:700;
+  display:flex;align-items:center;gap:6px;z-index:2;
+}
+.hero-pro-lock{
+  position:absolute;top:16px;right:16px;
+  background:linear-gradient(135deg,#F5A623,#FF6B35);
+  color:white;border-radius:99px;padding:5px 11px;
+  font-size:11px;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;z-index:3;
+}
+
+/* Stats Row */
+.stats-row{display:flex;gap:10px;margin-bottom:22px}
+.stat-tile{
+  flex:1;background:var(--cream);
+  border:1px solid var(--border);
+  border-radius:18px;padding:15px 12px;text-align:center;
+  transition:transform .2s;cursor:default;
+}
+.stat-tile:hover{transform:translateY(-2px)}
+.stat-num{
+  font-family:'Fraunces',serif;
+  font-size:30px;font-weight:800;line-height:1;margin-bottom:4px;
+}
+.stat-lbl{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase}
+
+/* Section */
+.sec-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:13px}
+.sec-title{font-family:'Fraunces',serif;font-size:19px;font-weight:600}
+.sec-link{font-size:12px;font-weight:600;color:var(--fire);cursor:pointer}
+
+/* Cat scroll */
+.cat-scroll{display:flex;gap:9px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;margin-bottom:24px}
+.cat-scroll::-webkit-scrollbar{display:none}
+.cat-chip{
+  display:flex;align-items:center;gap:7px;
+  padding:10px 16px;border-radius:99px;
+  border:1.5px solid var(--border);background:var(--cream);
+  white-space:nowrap;cursor:pointer;flex-shrink:0;
+  font-size:13px;font-weight:500;
+  transition:all .2s;
+}
+.cat-chip:hover,.cat-chip.active{background:var(--ink);color:white;border-color:var(--ink)}
+
+/* Friend mini */
+.friends-card{background:var(--cream);border:1px solid var(--border);border-radius:18px;padding:4px 16px}
+.friend-row{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--border)}
+.friend-row:last-child{border-bottom:none}
+.f-avatar{width:40px;height:40px;border-radius:50%;background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;border:2px solid var(--border)}
+.f-info{flex:1;min-width:0}
+.f-name{font-size:14px;font-weight:600;margin-bottom:2px}
+.f-activity{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.f-streak{font-size:13px;font-weight:700;color:var(--fire);white-space:nowrap;flex-shrink:0}
+
+/* ═══════════════════════════════════════════
+   CHALLENGE SCREEN
+═══════════════════════════════════════════ */
+#screen-challenge{display:none;min-height:100vh;flex-direction:column;background:var(--paper)}
+
+.challenge-hero{
+  padding:52px 24px 28px;
+  position:relative;overflow:hidden;
+  background:var(--ink);
+}
+.ch-orb{position:absolute;border-radius:50%;animation:orbMove 12s ease-in-out infinite}
+.ch-orb-1{width:260px;height:260px;top:-80px;right:-60px;opacity:.3}
+.ch-orb-2{width:180px;height:180px;bottom:-60px;left:-40px;opacity:.18;animation-delay:-5s}
+.ch-back{
+  background:rgba(255,255,255,.12);border:none;border-radius:99px;
+  padding:9px 16px;font-size:14px;cursor:pointer;color:white;
+  font-family:'Instrument Sans',sans-serif;
+  margin-bottom:22px;display:inline-flex;align-items:center;gap:6px;
+  position:relative;z-index:2;transition:background .2s;
+}
+.ch-back:hover{background:rgba(255,255,255,.2)}
+.ch-cat-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.12);border-radius:99px;
+  padding:5px 13px;font-size:12px;color:rgba(255,255,255,.8);
+  margin-bottom:12px;position:relative;z-index:2;
+}
+.ch-title{
+  font-family:'Fraunces',serif;
+  font-size:clamp(28px,7vw,36px);font-weight:800;color:white;
+  line-height:1.1;margin-bottom:10px;position:relative;z-index:2;
+}
+.ch-meta{font-size:13px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:14px;position:relative;z-index:2}
+.ch-meta span{display:flex;align-items:center;gap:5px}
+
+.ch-body{flex:1;padding:24px 22px 100px;display:flex;flex-direction:column;gap:16px}
+
+.prompt-card{
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:var(--r);padding:22px;
+}
+.prompt-label{font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.prompt-text{font-size:17px;line-height:1.65;font-weight:400}
+
+.tip-card{
+  background:var(--gold-soft);border:1px solid rgba(245,166,35,.3);
+  border-radius:var(--rr);padding:15px 17px;
+  display:flex;gap:10px;align-items:flex-start;
+}
+.tip-icon{font-size:16px;margin-top:1px;flex-shrink:0}
+.tip-text{font-size:13px;color:#7A6000;line-height:1.55}
+
+/* Timer */
+.timer-card{
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:var(--r);padding:24px;text-align:center;
+}
+.timer-display{
+  font-family:'Fraunces',serif;
+  font-size:64px;font-weight:800;
+  letter-spacing:-3px;line-height:1;margin-bottom:6px;
+  transition:color .3s;
+}
+.timer-display.idle{color:var(--ink)}
+.timer-display.running{color:var(--fire)}
+.timer-display.done{color:var(--sage)}
+.timer-sub{font-size:12px;color:var(--muted);margin-bottom:18px;min-height:18px}
+.timer-btns{display:flex;gap:10px;justify-content:center}
+.t-btn{
+  border:none;border-radius:14px;padding:13px 22px;
+  font-size:14px;font-weight:600;cursor:pointer;
+  font-family:'Instrument Sans',sans-serif;transition:all .2s;
+}
+.t-btn-primary{background:var(--ink);color:white}
+.t-btn-primary:hover{background:#333}
+.t-btn-secondary{background:var(--border);color:var(--ink)}
+.t-btn-secondary:hover{background:#ddd}
+
+/* Reaction */
+.reaction-card{
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:var(--r);padding:22px;
+}
+.reaction-q{font-family:'Fraunces',serif;font-size:18px;font-weight:600;margin-bottom:14px}
+.reaction-input{
+  width:100%;background:var(--paper);
+  border:1.5px solid var(--border);
+  border-radius:14px;padding:14px 16px;
+  font-size:14px;font-family:'Instrument Sans',sans-serif;
+  color:var(--ink);resize:none;outline:none;
+  transition:border .2s;line-height:1.55;
+}
+.reaction-input:focus{border-color:var(--fire)}
+.reaction-input::placeholder{color:var(--muted)}
+
+/* AI Bubble */
+.ai-bubble{
+  background:#F3F0FF;border:1px solid #DDD8FF;
+  border-radius:14px;padding:15px 17px;
+  display:flex;gap:10px;align-items:flex-start;
+  animation:fadeUp .4s ease;
+}
+.ai-face{font-size:20px;flex-shrink:0;margin-top:1px}
+.ai-text{font-size:13px;line-height:1.6;color:#3D3080}
+.ai-dots{display:flex;gap:4px;align-items:center;padding:4px 0}
+.ai-dot{width:7px;height:7px;border-radius:50%;background:#9C8FFF;animation:dotPulse 1.2s ease infinite}
+.ai-dot:nth-child(2){animation-delay:.2s}
+.ai-dot:nth-child(3){animation-delay:.4s}
+
+.complete-btn{
+  background:linear-gradient(135deg,var(--fire),#FF7043);
+  color:white;border:none;border-radius:18px;
+  padding:19px;font-size:16px;font-weight:700;
+  cursor:pointer;width:100%;margin-top:14px;
+  font-family:'Instrument Sans',sans-serif;
+  transition:all .2s;display:flex;align-items:center;
+  justify-content:center;gap:8px;
+  box-shadow:0 4px 20px rgba(255,77,28,.35);
+}
+.complete-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(255,77,28,.45)}
+.complete-btn:active{transform:translateY(0)}
+
+/* ═══════════════════════════════════════════
+   CELEBRATION
+═══════════════════════════════════════════ */
+#screen-celebrate{
+  min-height:100vh;background:var(--ink);color:white;
+  display:none;flex-direction:column;align-items:center;
+  justify-content:center;padding:48px 28px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.confetti-piece{
+  position:absolute;width:8px;height:8px;border-radius:2px;
+  animation:confettiFall linear forwards;
+  pointer-events:none;
+}
+.coring{
+  position:absolute;width:500px;height:500px;border-radius:50%;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  background:conic-gradient(from 0deg,#FF4D1C,#F5A623,#4ECDC4,#7C6FF7,#FF4D1C);
+  opacity:.06;animation:spin 12s linear infinite;
+}
+.celeb-icon{font-size:80px;margin-bottom:16px;animation:float 2s ease-in-out infinite}
+.celeb-title{font-family:'Fraunces',serif;font-size:40px;font-weight:900;line-height:1;margin-bottom:8px}
+.celeb-sub{font-size:15px;color:rgba(255,255,255,.55);margin-bottom:32px;line-height:1.5}
+.xp-badge{
+  background:rgba(255,77,28,.2);border:1.5px solid rgba(255,77,28,.4);
+  border-radius:16px;padding:14px 28px;
+  font-size:22px;font-weight:800;color:#FF8C73;
+  margin-bottom:12px;font-family:'Fraunces',serif;
+}
+.streak-badge-celeb{
+  background:rgba(245,166,35,.15);border:1.5px solid rgba(245,166,35,.3);
+  border-radius:14px;padding:12px 24px;
+  font-size:15px;font-weight:700;color:var(--gold);
+  margin-bottom:32px;
+}
+.share-btn{
+  background:white;color:var(--ink);border:none;
+  border-radius:14px;padding:16px 24px;font-size:15px;font-weight:700;
+  cursor:pointer;width:100%;margin-bottom:10px;
+  font-family:'Instrument Sans',sans-serif;transition:all .2s;
+}
+.share-btn:hover{background:#f0f0f0;transform:translateY(-1px)}
+.home-btn{
+  background:transparent;color:rgba(255,255,255,.5);
+  border:1px solid rgba(255,255,255,.15);border-radius:14px;
+  padding:14px 24px;font-size:14px;cursor:pointer;width:100%;
+  font-family:'Instrument Sans',sans-serif;transition:all .2s;
+}
+.home-btn:hover{color:white;border-color:rgba(255,255,255,.4)}
+
+/* ═══════════════════════════════════════════
+   PAYWALL / PRO
+═══════════════════════════════════════════ */
+#screen-pro{
+  min-height:100vh;background:var(--ink);color:white;
+  display:none;flex-direction:column;padding:52px 24px 48px;
+  position:relative;overflow:hidden;
+}
+.pro-orb1{position:absolute;width:300px;height:300px;border-radius:50%;top:-80px;right:-80px;background:radial-gradient(circle,rgba(245,166,35,.3),transparent 70%);animation:orbMove 10s ease infinite}
+.pro-orb2{position:absolute;width:200px;height:200px;border-radius:50%;bottom:-60px;left:-40px;background:radial-gradient(circle,rgba(124,111,247,.25),transparent 70%);animation:orbMove 10s ease infinite;animation-delay:-4s}
+.pro-back{background:rgba(255,255,255,.1);border:none;border-radius:99px;padding:9px 16px;font-size:14px;cursor:pointer;color:white;font-family:'Instrument Sans',sans-serif;margin-bottom:28px;display:inline-flex;align-items:center;gap:6px;transition:background .2s;position:relative;z-index:2}
+.pro-back:hover{background:rgba(255,255,255,.2)}
+.pro-crown{font-size:52px;margin-bottom:16px;position:relative;z-index:2;animation:float 3s ease infinite}
+.pro-title{font-family:'Fraunces',serif;font-size:36px;font-weight:900;line-height:1.05;margin-bottom:8px;position:relative;z-index:2}
+.pro-title em{font-style:italic;color:var(--gold)}
+.pro-sub{font-size:14px;color:rgba(255,255,255,.55);margin-bottom:32px;line-height:1.6;position:relative;z-index:2}
+.pro-features{display:flex;flex-direction:column;gap:11px;margin-bottom:32px;position:relative;z-index:2}
+.pro-feat{
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:14px;padding:14px 18px;
+  display:flex;align-items:flex-start;gap:13px;
+}
+.pro-feat-icon{font-size:22px;flex-shrink:0}
+.pro-feat-text h4{font-size:14px;font-weight:600;margin-bottom:3px}
+.pro-feat-text p{font-size:12px;color:rgba(255,255,255,.5);line-height:1.5}
+.pro-plans{display:flex;gap:10px;margin-bottom:24px;position:relative;z-index:2}
+.pro-plan{
+  flex:1;border-radius:18px;padding:18px 14px;text-align:center;
+  cursor:pointer;transition:all .2s;position:relative;
+  border:2px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);
+}
+.pro-plan.sel{border-color:var(--gold);background:rgba(245,166,35,.12)}
+.pro-plan-badge{
+  position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,#F5A623,#FF6B35);
+  color:white;font-size:10px;font-weight:700;letter-spacing:.5px;
+  padding:3px 10px;border-radius:99px;white-space:nowrap;
+}
+.pro-plan-period{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:6px}
+.pro-plan-price{font-family:'Fraunces',serif;font-size:28px;font-weight:800;margin-bottom:2px}
+.pro-plan-sub{font-size:11px;color:rgba(255,255,255,.4)}
+.pro-plan.sel .pro-plan-price{color:var(--gold)}
+.pro-cta-btn{
+  width:100%;background:linear-gradient(135deg,#F5A623,#FF6B35);
+  color:white;border:none;border-radius:18px;padding:19px;
+  font-size:16px;font-weight:700;cursor:pointer;
+  font-family:'Instrument Sans',sans-serif;
+  box-shadow:0 6px 24px rgba(245,166,35,.3);
+  transition:all .2s;position:relative;z-index:2;
+}
+.pro-cta-btn:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(245,166,35,.45)}
+.pro-legal{font-size:11px;color:rgba(255,255,255,.3);text-align:center;margin-top:14px;line-height:1.6;position:relative;z-index:2}
+.pro-restore{background:none;border:none;color:rgba(255,255,255,.3);font-size:12px;cursor:pointer;font-family:'Instrument Sans',sans-serif;margin-top:8px;display:block;margin-left:auto;margin-right:auto;position:relative;z-index:2}
+
+/* ═══════════════════════════════════════════
+   FEED
+═══════════════════════════════════════════ */
+#screen-feed{padding:52px 22px 100px;display:none}
+.feed-header{margin-bottom:22px}
+.feed-title{font-family:'Fraunces',serif;font-size:28px;font-weight:800;margin-bottom:4px}
+.feed-sub{font-size:13px;color:var(--muted)}
+.feed-card{
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:18px;padding:18px;margin-bottom:12px;
+  animation:fadeUp .4s ease;
+}
+.fc-header{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.fc-name{font-size:14px;font-weight:600}
+.fc-time{font-size:12px;color:var(--muted);margin-left:auto}
+.fc-tag{
+  display:inline-flex;align-items:center;gap:5px;
+  background:var(--paper);border:1px solid var(--border);
+  padding:4px 10px;border-radius:99px;
+  font-size:12px;font-weight:500;color:var(--muted);margin-bottom:9px;
+}
+.fc-reaction{font-size:14px;line-height:1.55;margin-bottom:12px;font-style:italic;color:var(--ink)}
+.fc-actions{display:flex;gap:16px}
+.fc-action{
+  background:none;border:none;cursor:pointer;
+  font-size:13px;color:var(--muted);
+  display:flex;align-items:center;gap:5px;
+  font-family:'Instrument Sans',sans-serif;padding:0;
+  transition:color .2s;
+}
+.fc-action:hover{color:var(--fire)}
+.fc-action.fired{color:var(--fire);font-weight:600}
+.feed-invite{
+  background:var(--ink);border-radius:18px;padding:20px;
+  text-align:center;margin-bottom:12px;color:white;
+}
+.feed-invite h3{font-family:'Fraunces',serif;font-size:18px;font-weight:700;margin-bottom:6px}
+.feed-invite p{font-size:13px;color:rgba(255,255,255,.55);margin-bottom:14px}
+.invite-btn{
+  background:var(--fire);color:white;border:none;
+  border-radius:12px;padding:12px 22px;font-size:14px;font-weight:600;
+  cursor:pointer;font-family:'Instrument Sans',sans-serif;transition:all .2s;
+}
+.invite-btn:hover{background:#e63c12}
+
+/* ═══════════════════════════════════════════
+   PROFILE
+═══════════════════════════════════════════ */
+#screen-profile{padding:52px 22px 100px;display:none}
+.profile-top{text-align:center;padding:8px 0 28px;border-bottom:1px solid var(--border);margin-bottom:24px}
+.profile-avatar{
+  width:76px;height:76px;border-radius:50%;
+  background:var(--ink);font-size:36px;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 14px;
+  border:3px solid var(--paper);
+  box-shadow:0 0 0 3px var(--fire);
+}
+.profile-name{font-family:'Fraunces',serif;font-size:26px;font-weight:800;margin-bottom:3px}
+.profile-level{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--fire-soft);border:1px solid rgba(255,77,28,.2);
+  padding:5px 12px;border-radius:99px;
+  font-size:12px;font-weight:700;color:var(--fire);margin-bottom:16px;
+}
+.profile-stats{display:flex}
+.ps{flex:1;text-align:center;padding:0 10px;border-right:1px solid var(--border)}
+.ps:last-child{border:none}
+.ps-num{font-family:'Fraunces',serif;font-size:28px;font-weight:800;line-height:1}
+.ps-lbl{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+
+.xp-section{margin-bottom:24px}
+.xp-header{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px}
+.xp-label{font-weight:600}
+.xp-count{color:var(--muted)}
+.xp-track{height:9px;background:var(--border);border-radius:99px;overflow:hidden}
+.xp-fill{
+  height:100%;background:linear-gradient(90deg,var(--fire),var(--gold));
+  border-radius:99px;transition:width 1.2s cubic-bezier(.22,.68,0,1.2);
+}
+
+.badges-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+.badge-tile{
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:14px;padding:13px 8px;text-align:center;
+  transition:transform .2s;
+}
+.badge-tile:hover{transform:translateY(-2px)}
+.badge-tile.locked{opacity:.3;filter:grayscale(1)}
+.badge-emoji{font-size:26px;margin-bottom:5px}
+.badge-name{font-size:10px;font-weight:600;color:var(--muted);line-height:1.3}
+
+.history-list{display:flex;flex-direction:column;gap:9px}
+.hist-item{
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:14px;padding:13px 15px;
+  display:flex;align-items:center;gap:12px;
+}
+.hist-cat{
+  width:38px;height:38px;border-radius:11px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+}
+.hist-info{flex:1;min-width:0}
+.hist-title{font-size:14px;font-weight:600;margin-bottom:2px}
+.hist-meta{font-size:12px;color:var(--muted)}
+.hist-check{color:var(--sage);font-size:18px;flex-shrink:0}
+
+/* Settings section */
+.settings-list{display:flex;flex-direction:column;gap:0;background:var(--cream);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:20px}
+.settings-item{
+  display:flex;align-items:center;gap:13px;padding:15px 18px;
+  border-bottom:1px solid var(--border);cursor:pointer;transition:background .2s;
+}
+.settings-item:last-child{border:none}
+.settings-item:hover{background:var(--paper)}
+.s-icon{font-size:20px;flex-shrink:0}
+.s-label{flex:1;font-size:14px;font-weight:500}
+.s-value{font-size:13px;color:var(--muted)}
+.s-arrow{color:var(--muted);font-size:16px}
+
+/* Toggle */
+.toggle{
+  width:44px;height:26px;background:var(--border);
+  border-radius:99px;position:relative;cursor:pointer;
+  transition:background .2s;flex-shrink:0;
+}
+.toggle.on{background:var(--fire)}
+.toggle::after{
+  content:'';position:absolute;
+  width:20px;height:20px;border-radius:50%;
+  background:white;top:3px;left:3px;
+  transition:transform .2s;
+  box-shadow:0 2px 4px rgba(0,0,0,.15);
+}
+.toggle.on::after{transform:translateX(18px)}
+
+/* ═══════════════════════════════════════════
+   NOTIFICATION SCHEDULER MODAL
+═══════════════════════════════════════════ */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(15,15,14,.6);
+  z-index:500;display:none;align-items:flex-end;
+  backdrop-filter:blur(4px);
+}
+.modal-overlay.open{display:flex}
+.modal-sheet{
+  background:var(--cream);border-radius:26px 26px 0 0;
+  padding:28px 24px max(40px,env(safe-area-inset-bottom));
+  width:100%;max-width:440px;margin:0 auto;
+  animation:fadeUp .3s ease;
+}
+.modal-handle{width:40px;height:4px;background:var(--border);border-radius:99px;margin:0 auto 22px}
+.modal-title{font-family:'Fraunces',serif;font-size:22px;font-weight:700;margin-bottom:6px}
+.modal-sub{font-size:14px;color:var(--muted);margin-bottom:22px;line-height:1.5}
+.time-opts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.time-opt{
+  padding:10px 16px;border-radius:99px;
+  border:1.5px solid var(--border);background:var(--paper);
+  font-size:14px;font-weight:500;cursor:pointer;
+  transition:all .2s;
+}
+.time-opt.sel{background:var(--ink);color:white;border-color:var(--ink)}
+.modal-cta{
+  background:var(--fire);color:white;border:none;border-radius:16px;
+  padding:17px;font-size:15px;font-weight:700;cursor:pointer;
+  width:100%;font-family:'Instrument Sans',sans-serif;transition:all .2s;
+}
+.modal-cta:hover{background:#e63c12}
+
+/* Pro gate overlay on challenge */
+.pro-gate{
+  position:absolute;inset:0;
+  background:rgba(15,15,14,.85);
+  border-radius:24px;z-index:10;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:28px;
+  backdrop-filter:blur(4px);
+}
+.pro-gate-icon{font-size:40px;margin-bottom:12px}
+.pro-gate-title{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:white;margin-bottom:6px}
+.pro-gate-sub{font-size:13px;color:rgba(255,255,255,.6);margin-bottom:18px;line-height:1.5}
+.pro-gate-btn{
+  background:linear-gradient(135deg,#F5A623,#FF6B35);
+  color:white;border:none;border-radius:14px;
+  padding:13px 24px;font-size:14px;font-weight:700;
+  cursor:pointer;font-family:'Instrument Sans',sans-serif;transition:all .2s;
+}
+.pro-gate-btn:hover{transform:scale(1.03)}
+
+/* Utility */
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ════════════════════════════════════════
+     NOTIFICATION TOAST
+════════════════════════════════════════ -->
+<div class="notif-toast hidden" id="notif-toast">
+  <div class="notif-icon" id="notif-icon">⚡</div>
+  <div class="notif-content">
+    <div class="notif-title" id="notif-title">Time to Spark!</div>
+    <div class="notif-body" id="notif-body">Your daily challenge is ready</div>
+  </div>
+  <div class="notif-close" onclick="document.getElementById('notif-toast').classList.add('hidden')">✕</div>
+</div>
+
+<!-- ════════════════════════════════════════
+     NOTIFICATION MODAL
+════════════════════════════════════════ -->
+<div class="modal-overlay" id="notif-modal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">⏰ Set Your Spark Time</div>
+    <div class="modal-sub">We'll remind you daily to do your Spark. Pick your best time.</div>
+    <div class="time-opts">
+      <div class="time-opt" onclick="selectTime(this,'7:00 AM')">7:00 AM</div>
+      <div class="time-opt" onclick="selectTime(this,'8:00 AM')">8:00 AM</div>
+      <div class="time-opt sel" onclick="selectTime(this,'9:00 AM')">9:00 AM</div>
+      <div class="time-opt" onclick="selectTime(this,'12:00 PM')">12:00 PM</div>
+      <div class="time-opt" onclick="selectTime(this,'6:00 PM')">6:00 PM</div>
+      <div class="time-opt" onclick="selectTime(this,'8:00 PM')">8:00 PM</div>
+      <div class="time-opt" onclick="selectTime(this,'9:00 PM')">9:00 PM</div>
+    </div>
+    <button class="modal-cta" onclick="saveNotifTime()">🔔 Save Reminder</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     ONBOARDING
+════════════════════════════════════════ -->
+<div id="screen-onboard">
+  <div class="onboard-orb onboard-orb-1"></div>
+  <div class="onboard-orb onboard-orb-2"></div>
+  <div class="onboard-orb onboard-orb-3"></div>
+  <div class="spark-wordmark fade-up">Spar<em>k</em></div>
+  <div class="spark-tagline fade-up-1">5 minutes · something real · every day</div>
+  <div class="progress-track" id="ob-progress">
+    <div class="progress-seg active"></div>
+    <div class="progress-seg"></div>
+    <div class="progress-seg"></div>
+  </div>
+  <div class="onboard-step" id="ob-step"></div>
+  <button class="cta-btn" id="ob-btn" disabled onclick="obNext()">Continue →</button>
+</div>
+
+<!-- ════════════════════════════════════════
+     NOTIFICATION PERMISSION
+════════════════════════════════════════ -->
+<div id="screen-permission" class="hidden">
+  <div class="onboard-orb onboard-orb-1" style="width:300px;height:300px"></div>
+  <div class="perm-graphic fade-up">🔔</div>
+  <div class="perm-title fade-up-1">Never miss a Spark</div>
+  <div class="perm-sub fade-up-2">Daily nudges keep your streak alive. We only send one notification per day — your Spark reminder.</div>
+  <div class="perm-features fade-up-3">
+    <div class="perm-feat"><div class="perm-feat-icon">⏰</div><div class="perm-feat-text">Pick your perfect reminder time — morning, noon, or night</div></div>
+    <div class="perm-feat"><div class="perm-feat-icon">🔥</div><div class="perm-feat-text">Streak protection: we'll ping you before midnight if you haven't sparked</div></div>
+    <div class="perm-feat"><div class="perm-feat-icon">🤫</div><div class="perm-feat-text">Zero spam. One daily Spark. That's it.</div></div>
+  </div>
+  <button class="cta-btn fade-up-4" onclick="requestNotifications()">🔔 Turn On Reminders</button>
+  <button class="perm-skip" onclick="skipNotifications()">Maybe later</button>
+</div>
+
+<!-- ════════════════════════════════════════
+     HOME
+════════════════════════════════════════ -->
+<div id="screen-home">
+  <div class="home-header fade-up">
+    <div>
+      <div class="home-greet-sub" id="greet-time">Good morning</div>
+      <div class="home-greet">Ready to <em>Spark?</em></div>
+    </div>
+    <div class="streak-pill" onclick="showStreakModal()">
+      <span class="streak-flame">🔥</span>
+      <span id="streak-display">5</span> days
+    </div>
+  </div>
+
+  <!-- Hero card -->
+  <div class="hero-card fade-up-1" id="hero-card" onclick="openChallenge()">
+    <div class="hero-card-inner" id="hero-inner">
+      <div class="hero-orb hero-orb-1" id="hero-orb1"></div>
+      <div class="hero-orb hero-orb-2" id="hero-orb2"></div>
+      <div class="hero-content">
+        <div class="hero-day-label">Today's Spark</div>
+        <div class="hero-badge" id="hero-badge">🎨 Create</div>
+        <div class="hero-title" id="hero-title">5-Minute Portrait</div>
+        <div class="hero-duration">⏱ <span id="hero-dur">5 min</span> · tap to begin</div>
+      </div>
+      <div class="hero-cta">Let's go →</div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row fade-up-2">
+    <div class="stat-tile"><div class="stat-num" id="stat-streak" style="color:var(--fire)">5</div><div class="stat-lbl">Streak</div></div>
+    <div class="stat-tile"><div class="stat-num" id="stat-xp" style="color:var(--iris)">230</div><div class="stat-lbl">XP</div></div>
+    <div class="stat-tile"><div class="stat-num" id="stat-done" style="color:var(--sage)">5</div><div class="stat-lbl">Sparks</div></div>
+  </div>
+
+  <!-- Categories -->
+  <div class="sec-header fade-up-3">
+    <div class="sec-title">Categories</div>
+    <div class="sec-link" onclick="switchTab('feed')">See all →</div>
+  </div>
+  <div class="cat-scroll fade-up-3">
+    <div class="cat-chip active">🎨 Create</div>
+    <div class="cat-chip">🧠 Think</div>
+    <div class="cat-chip">🎵 Sound</div>
+    <div class="cat-chip">🌿 Move</div>
+    <div class="cat-chip">🍳 Make</div>
+    <div class="cat-chip">📖 Wonder</div>
+  </div>
+
+  <!-- Friends -->
+  <div class="sec-header fade-up-4">
+    <div class="sec-title">Friends sparking</div>
+    <div class="sec-link" onclick="switchTab('feed')">Feed →</div>
+  </div>
+  <div class="friends-card fade-up-4">
+    <div class="friend-row"><div class="f-avatar">🦊</div><div class="f-info"><div class="f-name">Maya R.</div><div class="f-activity">"Drew my cat instead 😂" — 5-Min Portrait</div></div><div class="f-streak">🔥12</div></div>
+    <div class="friend-row"><div class="f-avatar">🐻</div><div class="f-info"><div class="f-name">Jordan K.</div><div class="f-activity">"Actually fell asleep after, oops" — Box Breathing</div></div><div class="f-streak">🔥21</div></div>
+    <div class="friend-row"><div class="f-avatar">🐬</div><div class="f-info"><div class="f-name">Sam L.</div><div class="f-activity">"She opened the door. He stayed." — 6-Word Story</div></div><div class="f-streak">🔥7</div></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     CHALLENGE
+════════════════════════════════════════ -->
+<div id="screen-challenge" style="display:none;flex-direction:column">
+  <div class="challenge-hero" id="ch-hero">
+    <div class="ch-orb ch-orb-1" id="ch-orb1"></div>
+    <div class="ch-orb ch-orb-2" id="ch-orb2"></div>
+    <button class="ch-back" onclick="goHome()">← Back</button>
+    <div class="ch-cat-badge" id="ch-badge">🎨 Create</div>
+    <div class="ch-title" id="ch-title">5-Minute Portrait</div>
+    <div class="ch-meta">
+      <span>⏱ <span id="ch-dur">5</span> min</span>
+      <span>⚡ +50 XP</span>
+    </div>
+  </div>
+  <div class="ch-body">
+    <div class="prompt-card fade-up">
+      <div class="prompt-label">Your Challenge</div>
+      <div class="prompt-text" id="ch-prompt">Loading...</div>
+    </div>
+    <div class="tip-card fade-up-1">
+      <div class="tip-icon">💡</div>
+      <div class="tip-text" id="ch-tip">Loading tip...</div>
+    </div>
+    <!-- Timer -->
+    <div class="timer-card fade-up-2">
+      <div class="timer-display idle" id="timer-display">05:00</div>
+      <div class="timer-sub" id="timer-sub">Press start when you're ready</div>
+      <div class="timer-btns">
+        <button class="t-btn t-btn-primary" id="timer-start-btn" onclick="timerStart()">▶ Start</button>
+        <button class="t-btn t-btn-secondary hidden" id="timer-pause-btn" onclick="timerPause()">⏸ Pause</button>
+        <button class="t-btn t-btn-secondary hidden" id="timer-reset-btn" onclick="timerReset()">↺ Reset</button>
+      </div>
+    </div>
+    <!-- Reaction -->
+    <div class="reaction-card fade-up-3">
+      <div class="reaction-q">How did it go? 👀</div>
+      <textarea class="reaction-input" id="reaction-input" rows="3" placeholder="What happened? What surprised you? What did you make..."></textarea>
+      <div id="ai-response-area"></div>
+      <button class="complete-btn" id="complete-btn" onclick="completeChallenge()">🔥 Mark Complete · +50 XP</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     CELEBRATION
+════════════════════════════════════════ -->
+<div id="screen-celebrate">
+  <div class="coring"></div>
+  <div class="celeb-icon">🔥</div>
+  <div class="celeb-title">Spark Complete!</div>
+  <div class="celeb-sub" id="celeb-sub">You just did something most people<br>only think about doing.</div>
+  <div class="xp-badge">+50 XP earned</div>
+  <div class="streak-badge-celeb" id="celeb-streak">🔥 6 day streak — keep going!</div>
+  <button class="share-btn" onclick="shareChallenge()">↗ Share this Spark</button>
+  <button class="home-btn" onclick="goHome()">Back to home</button>
+</div>
+
+<!-- ════════════════════════════════════════
+     FEED
+════════════════════════════════════════ -->
+<div id="screen-feed">
+  <div class="feed-header fade-up">
+    <div class="feed-title">Friend Feed</div>
+    <div class="feed-sub">See what everyone sparked today</div>
+  </div>
+  <div id="feed-list"></div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PRO PAYWALL
+════════════════════════════════════════ -->
+<div id="screen-pro">
+  <div class="pro-orb1"></div>
+  <div class="pro-orb2"></div>
+  <button class="pro-back" onclick="closePro()">← Back</button>
+  <div class="pro-crown fade-up">👑</div>
+  <div class="pro-title fade-up-1">Unlock <em>Spark Pro</em></div>
+  <div class="pro-sub fade-up-2">Go deeper. Grow faster. Never run out of new things to try.</div>
+  <div class="pro-features fade-up-3">
+    <div class="pro-feat"><div class="pro-feat-icon">🎯</div><div class="pro-feat-text"><h4>All 6 Categories Unlocked</h4><p>Sound, Make, Wonder + all future drops — yours forever</p></div></div>
+    <div class="pro-feat"><div class="pro-feat-icon">✨</div><div class="pro-feat-text"><h4>AI Personalization</h4><p>Challenges adapt to what you love. Your Spark feed, tuned to you.</p></div></div>
+    <div class="pro-feat"><div class="pro-feat-icon">🛡️</div><div class="pro-feat-text"><h4>Streak Shield (2× /month)</h4><p>Life happens. Skip a day without breaking your streak.</p></div></div>
+    <div class="pro-feat"><div class="pro-feat-icon">📚</div><div class="pro-feat-text"><h4>Full Spark History</h4><p>Every reaction, every challenge — beautifully archived.</p></div></div>
+    <div class="pro-feat"><div class="pro-feat-icon">🎁</div><div class="pro-feat-text"><h4>Monthly Theme Drops</h4><p>Exclusive themed challenge packs. New every month.</p></div></div>
+  </div>
+  <div class="pro-plans fade-up-4">
+    <div class="pro-plan" id="plan-weekly" onclick="selectPlan('weekly')">
+      <div class="pro-plan-period">Weekly</div>
+      <div class="pro-plan-price">$1.49</div>
+      <div class="pro-plan-sub">per week</div>
+    </div>
+    <div class="pro-plan sel" id="plan-annual" onclick="selectPlan('annual')">
+      <div class="pro-plan-badge">🔥 Best Value</div>
+      <div class="pro-plan-period">Annual</div>
+      <div class="pro-plan-price">$34.99</div>
+      <div class="pro-plan-sub">$2.92/month</div>
+    </div>
+    <div class="pro-plan" id="plan-monthly" onclick="selectPlan('monthly')">
+      <div class="pro-plan-period">Monthly</div>
+      <div class="pro-plan-price">$4.99</div>
+      <div class="pro-plan-sub">per month</div>
+    </div>
+  </div>
+  <button class="pro-cta-btn fade-up-5" onclick="subscribePro()">Start Free 7-Day Trial 🚀</button>
+  <div class="pro-legal">Cancel anytime · Renews automatically · Secure payment</div>
+  <button class="pro-restore" onclick="restorePurchase()">Restore purchase</button>
+</div>
+
+<!-- ════════════════════════════════════════
+     PROFILE
+════════════════════════════════════════ -->
+<div id="screen-profile">
+  <div class="profile-top fade-up">
+    <div class="profile-avatar">🦋</div>
+    <div class="profile-name">You</div>
+    <div class="profile-level">⚡ Level <span id="profile-level">2</span></div>
+    <div class="profile-stats">
+      <div class="ps"><div class="ps-num" id="ps-streak" style="color:var(--fire)">5</div><div class="ps-lbl">Streak</div></div>
+      <div class="ps"><div class="ps-num" id="ps-xp" style="color:var(--iris)">230</div><div class="ps-lbl">XP</div></div>
+      <div class="ps"><div class="ps-num" id="ps-sparks" style="color:var(--sage)">5</div><div class="ps-lbl">Sparks</div></div>
+    </div>
+  </div>
+
+  <!-- XP Bar -->
+  <div class="sec-title fade-up" style="margin-bottom:10px">Level Progress</div>
+  <div class="xp-section fade-up">
+    <div class="xp-header"><span class="xp-label">Level <span id="xp-level-cur">2</span></span><span class="xp-count" id="xp-count">30 / 200 XP</span></div>
+    <div class="xp-track"><div class="xp-fill" id="xp-fill" style="width:15%"></div></div>
+  </div>
+
+  <!-- Badges -->
+  <div class="sec-header fade-up-1"><div class="sec-title">Badges</div></div>
+  <div class="badges-grid fade-up-1" id="badges-grid"></div>
+
+  <!-- History -->
+  <div class="sec-header fade-up-2"><div class="sec-title">My Sparks</div></div>
+  <div class="history-list fade-up-2" id="history-list"></div>
+
+  <!-- Settings -->
+  <div class="sec-header fade-up-3" style="margin-top:24px"><div class="sec-title">Settings</div></div>
+  <div class="settings-list fade-up-3">
+    <div class="settings-item" onclick="openNotifModal()">
+      <div class="s-icon">🔔</div>
+      <div class="s-label">Daily Reminder</div>
+      <div class="s-value" id="notif-time-display">9:00 AM</div>
+      <div class="s-arrow">›</div>
+    </div>
+    <div class="settings-item" onclick="toggleNotifs(this)">
+      <div class="s-icon">📵</div>
+      <div class="s-label">Notifications</div>
+      <div class="toggle on" id="notif-toggle"></div>
+    </div>
+    <div class="settings-item" onclick="showProScreen()">
+      <div class="s-icon">👑</div>
+      <div class="s-label">Spark Pro</div>
+      <div class="s-value" id="pro-status">Free</div>
+      <div class="s-arrow">›</div>
+    </div>
+    <div class="settings-item">
+      <div class="s-icon">🌙</div>
+      <div class="s-label">Theme</div>
+      <div class="s-value">Light</div>
+      <div class="s-arrow">›</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     BOTTOM NAV
+════════════════════════════════════════ -->
+<nav class="bottom-nav hidden" id="bottom-nav">
+  <div class="nav-tab active" id="nav-home" onclick="switchTab('home')">
+    <div class="nav-tab-icon">⚡</div>
+    <div class="nav-tab-label">Today</div>
+    <div class="nav-tab-dot"></div>
+  </div>
+  <div class="nav-tab" id="nav-feed" onclick="switchTab('feed')">
+    <div class="nav-tab-icon">👥</div>
+    <div class="nav-tab-label">Feed</div>
+    <div class="nav-tab-dot"></div>
+  </div>
+  <div class="nav-tab" id="nav-profile" onclick="switchTab('profile')">
+    <div class="nav-tab-icon">🏆</div>
+    <div class="nav-tab-label">Profile</div>
+    <div class="nav-tab-dot"></div>
+  </div>
+</nav>
+
+</div><!-- .app -->
+
+<script>
+// ═══════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════
+const CATS = {
+  create:{emoji:'🎨',label:'Create',color:'#FF6B6B',bg:'#FFF0F0'},
+  think: {emoji:'🧠',label:'Think', color:'#6C8EFF',bg:'#F0F3FF'},
+  sound: {emoji:'🎵',label:'Sound', color:'#4ECDC4',bg:'#F0FFFE'},
+  move:  {emoji:'🌿',label:'Move',  color:'#56C596',bg:'#F0FFF8'},
+  make:  {emoji:'🍳',label:'Make',  color:'#FFB347',bg:'#FFFBF0'},
+  wonder:{emoji:'📖',label:'Wonder',color:'#C084FC',bg:'#FDF4FF'},
+};
+
+const CHALLENGES = [
+  {id:1,cat:'create',title:'5-Minute Portrait',prompt:'Draw a self-portrait — look at yourself for only 10 seconds, then draw from memory. No peeking.',dur:5,tip:"Don't try to be accurate. Let your hand move freely.",share:'My 5-second memory portrait 😂',free:true},
+  {id:2,cat:'think',title:'The Two Doors Riddle',prompt:'Two doors: freedom or danger. Two guards: one always lies, one always tells the truth. You can ask ONE question to ONE guard. What do you ask?',dur:10,tip:'Think about what happens when a liar answers a question about a truth-teller.',share:"Today's riddle broke my brain 🤯",free:true},
+  {id:3,cat:'move',title:'Box Breathing',prompt:'Navy SEAL stress reset: Breathe IN for 4 counts, HOLD for 4, OUT for 4, HOLD for 4. Repeat 4 times.',dur:5,tip:'Do it somewhere quiet. Close your eyes.',share:'I just tried the Navy SEAL breathing technique 🧘',free:true},
+  {id:4,cat:'sound',title:'Hum It Back',prompt:'Think of the last song stuck in your head. Hum or whistle just the chorus — right now, out loud.',dur:3,tip:'Notice how music lives in your body without you choosing it.',share:'The song stuck in my head today was... 🎵',free:false},
+  {id:5,cat:'make',title:'Open-Fridge Snack',prompt:'Open your fridge. You have exactly 8 minutes. Combine at least 3 things you wouldn\'t normally mix. Taste it. Rate it honestly.',dur:8,tip:'Peanut butter + banana + chili flakes is actually incredible.',share:'My fridge experiment: ⭐⭐⭐',free:false},
+  {id:6,cat:'wonder',title:'The Overview Effect',prompt:'Astronauts describe a profound shift seeing Earth from space. Close your eyes and imagine looking down at Earth right now. How big is your week\'s biggest worry from up there?',dur:7,tip:"Edgar Mitchell said: 'The Earth was so beautiful it broke my heart.'",share:'The Overview Effect hit different today 🌍',free:false},
+  {id:7,cat:'create',title:'6-Word Story',prompt:"Write a complete story in exactly 6 words. Hemingway's famous example: 'For sale: baby shoes, never worn.' Your turn.",dur:10,tip:'Constraint is the mother of creativity.',share:'My 6-word story today:',free:true},
+  {id:8,cat:'move',title:'Micro Walk',prompt:'Step outside (or to a window). Walk for exactly 5 minutes with no phone in hand. Notice 3 things you\'ve never consciously seen before.',dur:5,tip:'Look up more than you normally do.',share:'Thing I never noticed before today:',free:true},
+  {id:9,cat:'think',title:'Opposite Day',prompt:'Pick one strong opinion you hold. Now spend 5 minutes genuinely arguing the opposite position as convincingly as you can.',dur:5,tip:'This is how lawyers, debaters, and the sharpest thinkers build their minds.',share:'I just argued against my own opinion 🤔',free:true},
+  {id:10,cat:'sound',title:'Room Sounds',prompt:'Close your eyes for 3 minutes. Count every distinct sound you can hear in your environment.',dur:3,tip:'Most people find 5–12 sounds they hadn\'t noticed.',share:'I heard __ distinct sounds in my room 👂',free:false},
+];
+
+const FRIENDS = [
+  {name:'Maya R.',avatar:'🦊',challenge:'5-Minute Portrait',reaction:"I drew my cat by accident and honestly? Way more accurate.",time:'2h ago'},
+  {name:'Jordan K.',avatar:'🐻',challenge:'Box Breathing',reaction:"Did this before my presentation. Actually calmed down? Wild.",time:'3h ago'},
+  {name:'Sam L.',avatar:'🐬',challenge:'6-Word Story',reaction:'"She opened the door. He stayed." — I\'m proud of this one.',time:'5h ago'},
+  {name:'Alex T.',avatar:'🦉',challenge:'The Overview Effect',reaction:'Had a full existential moment in my kitchen. 10/10 recommend.',time:'6h ago'},
+  {name:'River M.',avatar:'🦋',challenge:'Micro Walk',reaction:'Found a tiny garden I walk past every day and never noticed.',time:'8h ago'},
+];
+
+const BADGES = [
+  {emoji:'🔥',name:'7-Day Streak',req:s=>s.streak>=7},
+  {emoji:'✍️',name:'Storyteller',req:s=>s.completed>=2},
+  {emoji:'🧠',name:'Deep Thinker',req:s=>s.completed>=4},
+  {emoji:'🌿',name:'Mover',req:s=>s.completed>=6},
+  {emoji:'⭐',name:'Spark Star',req:s=>s.xp>=400},
+  {emoji:'💎',name:'Diamond Mind',req:s=>s.xp>=1000},
+  {emoji:'🌍',name:'Globalist',req:_=>false},
+  {emoji:'👑',name:'Legend',req:_=>false},
+];
+
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+let state = {
+  streak:5, xp:230, completed:5,
+  isPro: false,
+  notifTime:'9:00 AM',
+  notifsOn:true,
+  lastReaction:'',
+  lastChallenge:null,
+  currentTab:'home',
+  history:[
+    {id:9,cat:'think',title:'Opposite Day',reaction:'Argued for pineapple on pizza. Changed my mind a little.',time:'Yesterday'},
+    {id:8,cat:'move',title:'Micro Walk',reaction:'Found a hidden alley full of murals.',time:'2 days ago'},
+    {id:7,cat:'create',title:'6-Word Story',reaction:'"He always wanted to. Never did."',time:'3 days ago'},
+    {id:3,cat:'move',title:'Box Breathing',reaction:'Fell asleep right after. Worth it.',time:'4 days ago'},
+    {id:2,cat:'think',title:'Two Doors Riddle',reaction:'Took me 8 minutes. Got it eventually.',time:'5 days ago'},
+  ],
+  obStep:0,
+  obAnswers:{},
+  timerInterval:null,
+  timerSecs:0,
+  timerRunning:false,
+  selectedPlan:'annual',
+  notifTimeout:null,
+};
+
+const OB_STEPS = [
+  {q:"What kind of Sparks excite you most?",key:'vibe',opts:[
+    {em:'🎨',txt:'Creative — drawing, writing, making'},
+    {em:'🧠',txt:'Mind puzzles & big ideas'},
+    {em:'🎵',txt:'Music & sound exploration'},
+    {em:'🌿',txt:'Body, breath & movement'},
+  ]},
+  {q:"How much time do you usually have?",key:'time',opts:[
+    {em:'⚡',txt:'5 minutes — I\'m always busy'},
+    {em:'☕',txt:'10–15 minutes — a nice break'},
+    {em:'🕰️',txt:'Whatever it takes'},
+  ]},
+  {q:"What's your biggest goal here?",key:'goal',opts:[
+    {em:'📵',txt:'Break out of passive scrolling'},
+    {em:'🌱',txt:'Try new things & grow'},
+    {em:'😌',txt:'Have fun and chill'},
+    {em:'🔥',txt:'Keep a streak & build habits'},
+  ]},
+];
+
+// ═══════════════════════════════════════════
+// SCREENS
+// ═══════════════════════════════════════════
+function showScreen(id){
+  ['onboard','permission','home','challenge','celebrate','pro','feed','profile']
+    .forEach(s=>{ const el=document.getElementById('screen-'+s); if(el){el.style.display='none'} });
+  const target = document.getElementById('screen-'+id);
+  if(target){ target.style.display = (id==='challenge')?'flex':'block'; }
+  const nav = document.getElementById('bottom-nav');
+  const showNav = ['home','feed','profile'].includes(id);
+  nav.classList.toggle('hidden',!showNav);
+}
+
+// ═══════════════════════════════════════════
+// ONBOARDING
+// ═══════════════════════════════════════════
+function renderObStep(){
+  const step = OB_STEPS[state.obStep];
+  const sel = state.obAnswers[step.key];
+  const container = document.getElementById('ob-step');
+  container.innerHTML = `
+    <div class="onboard-q fade-up">${step.q}</div>
+    <div class="onboard-opts fade-up-1">
+      ${step.opts.map(o=>`
+        <div class="onboard-opt${sel===o.txt?' sel':''}" onclick="obSelect('${o.txt.replace(/'/g,"\\'")}')">
+          <span class="onboard-opt-em">${o.em}</span>
+          <span class="onboard-opt-txt">${o.txt}</span>
+          <span class="onboard-opt-check">✓</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  const segs = document.querySelectorAll('.progress-seg');
+  segs.forEach((s,i)=>{
+    s.classList.remove('active','done');
+    if(i<state.obStep) s.classList.add('done');
+    if(i===state.obStep) s.classList.add('active');
+  });
+  const btn = document.getElementById('ob-btn');
+  btn.disabled = !sel;
+  btn.textContent = state.obStep < OB_STEPS.length-1 ? 'Continue →' : 'Start Sparking 🔥';
+}
+
+function obSelect(txt){
+  const step = OB_STEPS[state.obStep];
+  state.obAnswers[step.key] = txt;
+  document.getElementById('ob-btn').disabled = false;
+  renderObStep();
+}
+
+function obNext(){
+  if(state.obStep < OB_STEPS.length-1){
+    state.obStep++;
+    renderObStep();
+  } else {
+    showScreen('permission');
+  }
+}
+
+// ═══════════════════════════════════════════
+// NOTIFICATIONS
+// ═══════════════════════════════════════════
+async function requestNotifications(){
+  if('Notification' in window){
+    try{
+      const perm = await Notification.requestPermission();
+      if(perm==='granted'){
+        showToast('🔔','Reminders on!',`Daily Spark at ${state.notifTime}`);
+        scheduleNotifications();
+      }
+    }catch(e){}
+  }
+  finishOnboarding();
+}
+
+function skipNotifications(){ finishOnboarding(); }
+
+function scheduleNotifications(){
+  // In a real app, this would register a service worker and use Push API.
+  // Here we simulate with setTimeout for demo purposes.
+  if(state.notifTimeout) clearTimeout(state.notifTimeout);
+  // Show a demo notification after 8 seconds
+  state.notifTimeout = setTimeout(()=>{
+    showToast('⚡','Your Spark is waiting!','Tap to see today\'s challenge 🔥');
+  }, 8000);
+}
+
+function showToast(icon, title, body){
+  const toast = document.getElementById('notif-toast');
+  document.getElementById('notif-icon').textContent = icon;
+  document.getElementById('notif-title').textContent = title;
+  document.getElementById('notif-body').textContent = body;
+  toast.classList.remove('hidden');
+  setTimeout(()=>toast.classList.add('hidden'), 4500);
+}
+
+function openNotifModal(){ document.getElementById('notif-modal').classList.add('open'); }
+function selectTime(el, time){
+  document.querySelectorAll('.time-opt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
+  state.notifTime = time;
+}
+function saveNotifTime(){
+  document.getElementById('notif-modal').classList.remove('open');
+  document.getElementById('notif-time-display').textContent = state.notifTime;
+  showToast('🔔','Reminder updated!',`You\'ll Spark daily at ${state.notifTime}`);
+  scheduleNotifications();
+}
+function toggleNotifs(el){
+  const toggle = el.querySelector('.toggle');
+  toggle.classList.toggle('on');
+  state.notifsOn = toggle.classList.contains('on');
+}
+
+// ═══════════════════════════════════════════
+// MAIN APP INIT
+// ═══════════════════════════════════════════
+function finishOnboarding(){
+  updateGreeting();
+  updateHeroCard();
+  updateStats();
+  renderFeed();
+  renderProfile();
+  showScreen('home');
+  switchTab('home');
+  // Simulate notification after delay
+  setTimeout(()=>{
+    showToast('⚡','Your daily Spark is ready!','Tap to see today\'s challenge');
+  }, 3000);
+}
+
+function updateGreeting(){
+  const h = new Date().getHours();
+  const greet = h<12?'Good morning':h<17?'Good afternoon':'Good evening';
+  document.getElementById('greet-time').textContent = greet;
+}
+
+function updateHeroCard(){
+  const ch = CHALLENGES[state.completed % CHALLENGES.length];
+  const cat = CATS[ch.cat];
+  document.getElementById('hero-badge').textContent = cat.emoji+' '+cat.label;
+  document.getElementById('hero-title').textContent = ch.title;
+  document.getElementById('hero-dur').textContent = ch.dur+' min';
+  document.getElementById('hero-orb1').style.background = `radial-gradient(circle,${cat.color}55,transparent 70%)`;
+  document.getElementById('hero-orb2').style.background = `radial-gradient(circle,${cat.color}33,transparent 70%)`;
+  const inner = document.getElementById('hero-inner');
+  // Add pro lock to locked challenges
+  const existingLock = inner.querySelector('.hero-pro-lock');
+  if(existingLock) existingLock.remove();
+  if(!ch.free && !state.isPro){
+    const lock = document.createElement('div');
+    lock.className = 'hero-pro-lock';
+    lock.textContent = '👑 Pro';
+    inner.appendChild(lock);
+  }
+}
+
+function updateStats(){
+  ['streak','xp','done'].forEach(k=>{
+    const val = k==='done'?state.completed:state[k==='xp'?'xp':'streak'];
+    const el = document.getElementById('stat-'+k);
+    if(el) el.textContent = k==='done'?state.completed:state[k];
+  });
+  document.getElementById('stat-streak').textContent = state.streak;
+  document.getElementById('stat-xp').textContent = state.xp;
+  document.getElementById('stat-done').textContent = state.completed;
+  document.getElementById('streak-display').textContent = state.streak;
+}
+
+// ═══════════════════════════════════════════
+// CHALLENGE
+// ═══════════════════════════════════════════
+function openChallenge(){
+  const ch = CHALLENGES[state.completed % CHALLENGES.length];
+  if(!ch.free && !state.isPro){
+    showProScreen(); return;
+  }
+  const cat = CATS[ch.cat];
+  document.getElementById('ch-badge').textContent = cat.emoji+' '+cat.label;
+  document.getElementById('ch-title').textContent = ch.title;
+  document.getElementById('ch-dur').textContent = ch.dur;
+  document.getElementById('ch-prompt').textContent = ch.prompt;
+  document.getElementById('ch-tip').textContent = ch.tip;
+  document.getElementById('ch-orb1').style.background = `radial-gradient(circle,${cat.color}50,transparent 65%)`;
+  document.getElementById('ch-orb2').style.background = `radial-gradient(circle,${cat.color}30,transparent 65%)`;
+  timerReset(ch.dur);
+  document.getElementById('reaction-input').value = '';
+  document.getElementById('ai-response-area').innerHTML = '';
+  state.lastChallenge = ch;
+  showScreen('challenge');
+}
+
+// ═══════════════════════════════════════════
+// TIMER
+// ═══════════════════════════════════════════
+function timerReset(mins){
+  clearInterval(state.timerInterval);
+  state.timerRunning = false;
+  const ch = state.lastChallenge || CHALLENGES[state.completed%CHALLENGES.length];
+  state.timerSecs = (mins||ch.dur) * 60;
+  updateTimerDisplay();
+  document.getElementById('timer-display').className='timer-display idle';
+  document.getElementById('timer-sub').textContent = 'Press start when you\'re ready';
+  document.getElementById('timer-start-btn').classList.remove('hidden');
+  document.getElementById('timer-pause-btn').classList.add('hidden');
+  document.getElementById('timer-reset-btn').classList.add('hidden');
+}
+
+function timerStart(){
+  state.timerRunning=true;
+  document.getElementById('timer-display').className='timer-display running';
+  document.getElementById('timer-sub').textContent='Timer running — go! 🔥';
+  document.getElementById('timer-start-btn').classList.add('hidden');
+  document.getElementById('timer-pause-btn').classList.remove('hidden');
+  document.getElementById('timer-reset-btn').classList.remove('hidden');
+  state.timerInterval = setInterval(()=>{
+    if(state.timerSecs<=0){
+      clearInterval(state.timerInterval);
+      state.timerRunning=false;
+      document.getElementById('timer-display').className='timer-display done';
+      document.getElementById('timer-display').textContent='✓ Done!';
+      document.getElementById('timer-sub').textContent='Time\'s up! How did it go? 🎉';
+      document.getElementById('timer-pause-btn').classList.add('hidden');
+      showToast('✅','Timer done!','Log your reaction and complete the Spark');
+      return;
+    }
+    state.timerSecs--;
+    updateTimerDisplay();
+  },1000);
+}
+
+function timerPause(){
+  clearInterval(state.timerInterval);
+  state.timerRunning=false;
+  document.getElementById('timer-display').className='timer-display idle';
+  document.getElementById('timer-sub').textContent='Paused — press start to continue';
+  document.getElementById('timer-pause-btn').classList.add('hidden');
+  document.getElementById('timer-start-btn').classList.remove('hidden');
+}
+
+function updateTimerDisplay(){
+  const m=String(Math.floor(state.timerSecs/60)).padStart(2,'0');
+  const s=String(state.timerSecs%60).padStart(2,'0');
+  const el=document.getElementById('timer-display');
+  if(el) el.textContent=`${m}:${s}`;
+}
+
+// ═══════════════════════════════════════════
+// AI REACTION
+// ═══════════════════════════════════════════
+async function getAIReaction(reaction){
+  const area = document.getElementById('ai-response-area');
+  const ch = state.lastChallenge;
+  area.innerHTML = `<div class="ai-bubble"><div class="ai-face">✨</div><div class="ai-dots"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div></div></div>`;
+  try{
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        messages:[{role:'user',content:`You are Spark's warm AI companion. A user just completed this challenge: "${ch.title}" — ${ch.prompt}\n\nTheir reaction: "${reaction||'Completed it silently!'}"\n\nWrite a warm, enthusiastic 2-sentence response that:\n1. Acknowledges their specific reaction genuinely\n2. Drops one surprising related fact or insight\n\nKeep it fun, warm, like a knowledgeable best friend. Never generic. Max 55 words.`}]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.[0]?.text || "That was amazing! You just did something most people only think about. 🔥";
+    area.innerHTML = `<div class="ai-bubble"><div class="ai-face">✨</div><div class="ai-text">${text}</div></div>`;
+  }catch(e){
+    area.innerHTML = `<div class="ai-bubble"><div class="ai-face">✨</div><div class="ai-text">That was brilliant! You just proved that 5 minutes is enough to do something real. See you tomorrow 🔥</div></div>`;
+  }
+}
+
+// ═══════════════════════════════════════════
+// COMPLETE
+// ═══════════════════════════════════════════
+async function completeChallenge(){
+  const reaction = document.getElementById('reaction-input').value.trim();
+  const btn = document.getElementById('complete-btn');
+  btn.disabled=true; btn.textContent='✨ Saving...';
+  state.lastReaction = reaction;
+  await getAIReaction(reaction);
+  setTimeout(()=>{
+    state.streak++;
+    state.xp+=50;
+    state.completed++;
+    if(state.lastChallenge && reaction){
+      state.history.unshift({
+        id:state.lastChallenge.id,
+        cat:state.lastChallenge.cat,
+        title:state.lastChallenge.title,
+        reaction:reaction,
+        time:'Just now'
+      });
+    }
+    updateStats();
+    updateHeroCard();
+    renderFeed();
+    renderProfile();
+    document.getElementById('celeb-streak').textContent=`🔥 ${state.streak} day streak — keep going!`;
+    spawnConfetti();
+    showScreen('celebrate');
+  },2200);
+}
+
+function spawnConfetti(){
+  const colors=['#FF4D1C','#F5A623','#4ECDC4','#7C6FF7','#56C596','#FF8B94'];
+  const container = document.getElementById('screen-celebrate');
+  for(let i=0;i<28;i++){
+    const c=document.createElement('div');
+    c.className='confetti-piece';
+    c.style.cssText=`left:${Math.random()*100}%;top:${-10+Math.random()*-40}px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${2+Math.random()*2}s;animation-delay:${Math.random()*.8}s;transform:rotate(${Math.random()*360}deg)`;
+    container.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  }
+}
+
+function shareChallenge(){
+  const ch = state.lastChallenge;
+  const text = `Just sparked "${ch?.title}" on Spark! ${ch?.share||''} — Day ${state.streak} 🔥\n\nDownload Spark and do yours today.`;
+  if(navigator.share){
+    navigator.share({title:'My Spark',text}).catch(()=>{});
+  } else {
+    navigator.clipboard?.writeText(text).then(()=>showToast('📋','Copied!','Share it anywhere 🎉'));
+  }
+}
+
+// ═══════════════════════════════════════════
+// PAYWALL
+// ═══════════════════════════════════════════
+function showProScreen(){
+  const prevScreen = state.currentTab;
+  state._prevScreen = prevScreen;
+  showScreen('pro');
+  document.getElementById('bottom-nav').classList.add('hidden');
+}
+
+function closePro(){
+  showScreen(state._prevScreen||'home');
+  document.getElementById('bottom-nav').classList.remove('hidden');
+  if(['home','feed','profile'].includes(state.currentTab)) switchTab(state.currentTab);
+}
+
+function selectPlan(plan){
+  state.selectedPlan=plan;
+  ['weekly','annual','monthly'].forEach(p=>{
+    document.getElementById('plan-'+p).classList.toggle('sel',p===plan);
+  });
+}
+
+function subscribePro(){
+  state.isPro=true;
+  document.getElementById('pro-status').textContent='✨ Pro';
+  showToast('👑','Welcome to Spark Pro!','All categories & features unlocked 🎉');
+  closePro();
+  updateHeroCard();
+}
+
+function restorePurchase(){
+  showToast('🔍','Checking...','Looking for your purchase');
+}
+
+// ═══════════════════════════════════════════
+// FEED
+// ═══════════════════════════════════════════
+function renderFeed(){
+  const list = document.getElementById('feed-list');
+  const userEntry = state.lastReaction ? [{
+    name:'You',avatar:'🦋',
+    challenge:state.lastChallenge?.title||'Today\'s Spark',
+    reaction:state.lastReaction,time:'Just now',mine:true,id:'me'
+  }] : [];
+  const allFeed = [...userEntry,...FRIENDS.map((f,i)=>({...f,id:i}))];
+  list.innerHTML = allFeed.map(f=>`
+    <div class="feed-card" style="animation-delay:${allFeed.indexOf(f)*.06}s">
+      <div class="fc-header">
+        <div class="f-avatar" style="${f.mine?'border:2px solid var(--fire)':''}">${f.avatar}</div>
+        <div>
+          <div class="fc-name">${f.name}</div>
+        </div>
+        <div class="fc-time">${f.time}</div>
+      </div>
+      <div class="fc-tag">⚡ ${f.challenge}</div>
+      <div class="fc-reaction">"${f.reaction}"</div>
+      <div class="fc-actions">
+        <button class="fc-action" id="fire-${f.id}" onclick="firePost('${f.id}')">🔥 Spark</button>
+        <button class="fc-action">💬 Reply</button>
+      </div>
+    </div>
+  `).join('') + `
+    <div class="feed-invite">
+      <h3>Invite your friends</h3>
+      <p>Sparking together keeps streaks stronger. Invite them now.</p>
+      <button class="invite-btn" onclick="inviteFriend()">📨 Invite friends</button>
+    </div>
+  `;
+}
+
+let fired = {};
+function firePost(id){
+  if(fired[id]) return;
+  fired[id]=true;
+  const btn=document.getElementById('fire-'+id);
+  if(btn){btn.textContent='🔥 Sparked!';btn.classList.add('fired');}
+}
+
+function inviteFriend(){
+  const text='Join me on Spark! It\'s a daily 5-minute challenge app that actually gets you off your phone and doing something real. 🔥';
+  if(navigator.share) navigator.share({title:'Spark',text}).catch(()=>{});
+  else { navigator.clipboard?.writeText(text); showToast('📋','Copied invite link!','Send it to your friends'); }
+}
+
+// ═══════════════════════════════════════════
+// PROFILE
+// ═══════════════════════════════════════════
+function renderProfile(){
+  const level = Math.floor(state.xp/200)+1;
+  const xpIn = state.xp%200;
+  document.getElementById('profile-level').textContent=level;
+  document.getElementById('ps-streak').textContent=state.streak;
+  document.getElementById('ps-xp').textContent=state.xp;
+  document.getElementById('ps-sparks').textContent=state.completed;
+  document.getElementById('xp-level-cur').textContent=level;
+  document.getElementById('xp-count').textContent=`${xpIn} / 200 XP`;
+  const fill=document.getElementById('xp-fill');
+  fill.style.width='0%';
+  setTimeout(()=>fill.style.width=`${(xpIn/200)*100}%`,100);
+
+  // Badges
+  const grid=document.getElementById('badges-grid');
+  grid.innerHTML=BADGES.map(b=>`
+    <div class="badge-tile${b.req(state)?'':' locked'}">
+      <div class="badge-emoji">${b.emoji}</div>
+      <div class="badge-name">${b.name}</div>
+    </div>
+  `).join('');
+
+  // History
+  const hist=document.getElementById('history-list');
+  const items=state.history.slice(0,6);
+  hist.innerHTML=items.length?items.map(h=>{
+    const cat=CATS[h.cat]||CATS.create;
+    return `<div class="hist-item">
+      <div class="hist-cat" style="background:${cat.bg}">${cat.emoji}</div>
+      <div class="hist-info">
+        <div class="hist-title">${h.title}</div>
+        <div class="hist-meta">${cat.label} · ${h.time}</div>
+      </div>
+      <div class="hist-check">✓</div>
+    </div>`;
+  }).join(''):'<div style="color:var(--muted);font-size:14px;padding:8px 0">Complete your first Spark to see history here!</div>';
+}
+
+// ═══════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════
+function switchTab(tab){
+  state.currentTab=tab;
+  ['home','feed','profile'].forEach(t=>{
+    document.getElementById('nav-'+t)?.classList.toggle('active',t===tab);
+  });
+  showScreen(tab);
+  if(tab==='profile') renderProfile();
+  if(tab==='feed') renderFeed();
+}
+
+function goHome(){
+  clearInterval(state.timerInterval);
+  state.timerRunning=false;
+  switchTab('home');
+  updateHeroCard();
+  updateStats();
+}
+
+function showStreakModal(){
+  showToast('🔥',`${state.streak}-Day Streak!`,'Keep going — you\'re on fire!');
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+document.addEventListener('DOMContentLoaded',()=>{
+  renderObStep();
+  showScreen('onboard');
+  document.getElementById('notif-modal').addEventListener('click',function(e){
+    if(e.target===this) this.classList.remove('open');
+  });
+  initPWA();
+});
+
+// ═══════════════════════════════════════════
+// PWA — SERVICE WORKER + INSTALL PROMPT
+// ═══════════════════════════════════════════
+let deferredInstallPrompt = null;
+
+function initPWA(){
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => { reg.update(); })
+      .catch(err => console.log('[Spark] SW failed:', err));
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      showToast('🆕','Update available!','Reload for the latest Spark');
+    });
+  }
+
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    setTimeout(showInstallBanner, 30000);
+  });
+
+  window.addEventListener('appinstalled', () => {
+    deferredInstallPrompt = null;
+    hideInstallBanner();
+    showToast('🎉','Spark installed!','Find it on your home screen ⚡');
+  });
+
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  if(isIOS && !isStandalone){ setTimeout(showIOSBanner, 20000); }
+
+  window.addEventListener('offline', () => {
+    showToast('📵',"You're offline",'Spark still works — challenges are cached 🔥');
+    document.getElementById('offline-pill').classList.remove('hidden');
+  });
+  window.addEventListener('online', () => {
+    document.getElementById('offline-pill').classList.add('hidden');
+    showToast('✅','Back online','Everything synced 🔥');
+  });
+}
+
+function showInstallBanner(){
+  if(!deferredInstallPrompt) return;
+  document.getElementById('install-banner').classList.remove('hidden');
+}
+function hideInstallBanner(){
+  document.getElementById('install-banner').classList.add('hidden');
+  document.getElementById('ios-banner').classList.add('hidden');
+}
+async function triggerInstall(){
+  if(!deferredInstallPrompt) return;
+  deferredInstallPrompt.prompt();
+  const { outcome } = await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+  hideInstallBanner();
+  if(outcome === 'accepted') showToast('🎉','Installing Spark...','Check your home screen!');
+}
+function showIOSBanner(){
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  if(isStandalone) return;
+  document.getElementById('ios-banner').classList.remove('hidden');
+}
+</script>
+
+<!-- ═══ INSTALL BANNER — Android/Chrome ═══ -->
+<div id="install-banner" class="hidden" style="position:fixed;bottom:84px;left:12px;right:12px;z-index:9000;background:#0F0F0E;color:white;border-radius:20px;padding:16px 18px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 40px rgba(0,0,0,.4);animation:fadeUp .4s ease;max-width:416px;margin:0 auto">
+  <div style="font-size:36px;flex-shrink:0">⚡</div>
+  <div style="flex:1">
+    <div style="font-weight:700;font-size:15px;margin-bottom:3px">Add Spark to Home Screen</div>
+    <div style="font-size:12px;color:rgba(255,255,255,.5)">Opens like a real app. No App Store needed.</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+    <button onclick="triggerInstall()" style="background:#FF4D1C;color:white;border:none;border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Instrument Sans',sans-serif;white-space:nowrap">Install ⚡</button>
+    <button onclick="hideInstallBanner()" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.5);border:none;border-radius:10px;padding:7px 14px;font-size:12px;cursor:pointer;font-family:'Instrument Sans',sans-serif">Not now</button>
+  </div>
+</div>
+
+<!-- ═══ IOS INSTALL BANNER — Safari ═══ -->
+<div id="ios-banner" class="hidden" style="position:fixed;bottom:84px;left:12px;right:12px;z-index:9000;background:#0F0F0E;color:white;border-radius:20px;padding:18px 20px;box-shadow:0 8px 40px rgba(0,0,0,.4);animation:fadeUp .4s ease;max-width:416px;margin:0 auto">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
+    <div style="font-weight:700;font-size:15px">📲 Add Spark to your iPhone</div>
+    <button onclick="hideInstallBanner()" style="background:none;border:none;color:rgba(255,255,255,.4);font-size:22px;cursor:pointer;line-height:1;padding:0;margin-left:12px">×</button>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:11px">
+    <div style="display:flex;align-items:center;gap:12px;font-size:13px;color:rgba(255,255,255,.7)"><div style="width:28px;height:28px;background:rgba(255,255,255,.1);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700">1</div>Tap the <strong style="color:white;margin:0 4px">Share</strong> button ⬆️ at the bottom of Safari</div>
+    <div style="display:flex;align-items:center;gap:12px;font-size:13px;color:rgba(255,255,255,.7)"><div style="width:28px;height:28px;background:rgba(255,255,255,.1);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700">2</div>Tap <strong style="color:white;margin:0 4px">"Add to Home Screen"</strong></div>
+    <div style="display:flex;align-items:center;gap:12px;font-size:13px;color:rgba(255,255,255,.7)"><div style="width:28px;height:28px;background:rgba(255,255,255,.1);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700">3</div>Tap <strong style="color:white;margin:0 4px">"Add"</strong> — Spark is on your home screen ⚡</div>
+  </div>
+</div>
+
+<!-- ═══ OFFLINE PILL ═══ -->
+<div id="offline-pill" class="hidden" style="position:fixed;top:12px;left:50%;transform:translateX(-50%);background:#1A1A1A;color:rgba(255,255,255,.75);padding:7px 16px;border-radius:99px;font-size:12px;font-weight:600;z-index:8000;display:flex;align-items:center;gap:6px;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.3)">
+  <span style="width:7px;height:7px;border-radius:50%;background:#FF4D1C;display:inline-block"></span>
+  Offline — cached mode
+</div>
+
+</body>
+</html>
