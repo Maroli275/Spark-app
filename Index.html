@@ -131,6 +131,7 @@ h3{font-family:'Fraunces',serif;font-size:19px;font-weight:500;line-height:1.3}
   font-size:48px;font-weight:900;
   letter-spacing:-2px;line-height:1;
   margin-bottom:6px;position:relative;z-index:1;
+  color:white;
 }
 .spark-wordmark em{color:var(--fire);font-style:normal}
 .spark-tagline{font-size:14px;color:rgba(255,255,255,.5);font-weight:300;margin-bottom:52px;position:relative;z-index:1}
@@ -140,12 +141,13 @@ h3{font-family:'Fraunces',serif;font-size:19px;font-weight:500;line-height:1.3}
 .progress-seg.done{background:var(--fire)}
 .progress-seg.active{background:var(--fire);flex:2}
 
-.onboard-step{flex:1;position:relative;z-index:1}
+.onboard-step{flex:1;position:relative;z-index:1;color:white}
 .onboard-q{
   font-family:'Fraunces',serif;
   font-size:clamp(24px,6vw,30px);
   font-weight:600;line-height:1.25;
   margin-bottom:28px;
+  color:white;
 }
 .onboard-opts{display:flex;flex-direction:column;gap:11px}
 .onboard-opt{
@@ -884,7 +886,7 @@ h3{font-family:'Fraunces',serif;font-size:19px;font-weight:500;line-height:1.3}
 <!-- ════════════════════════════════════════
      ONBOARDING
 ════════════════════════════════════════ -->
-<div id="screen-onboard">
+<div id="screen-onboard" style="color:white">
   <div class="onboard-orb onboard-orb-1"></div>
   <div class="onboard-orb onboard-orb-2"></div>
   <div class="onboard-orb onboard-orb-3"></div>
@@ -1193,11 +1195,11 @@ const CHALLENGES = [
   {id:13,cat:'create',title:'Emotion Color Map',prompt:"Draw a simple body outline — stick figure is fine. Color in where you currently feel different emotions living in your body. Anxiety, joy, tiredness — assign them colors and locations.",dur:8,tip:'Finnish researchers found humans map emotions to the same body areas across cultures.',share:'My emotional body map today 🎨',free:true},
   {id:14,cat:'create',title:'Character Sketch',prompt:"Look at the most interesting face you can find — a photo, painting, or real life. Write 5 sentences about who this person is. Make it up entirely. Give them a name, a secret, and a hope.",dur:8,tip:'Every great novelist does this exercise constantly.',share:'I invented a whole person today ✍️',free:true},
   // ── THINK ──────────────────────────────────────────
-  {id:2, cat:'think',title:'The Two Doors Riddle',prompt:"Two doors: one leads to freedom, one to danger. Two guards: one always lies, one always tells the truth. You can ask ONE question to ONE guard. What do you ask?",dur:10,tip:'Think about what happens when a liar answers a question about a truth-teller.',share:'Today's riddle broke my brain 🤯',free:true},
+  {id:2, cat:'think',title:'The Two Doors Riddle',prompt:"Two doors: one leads to freedom, one to danger. Two guards: one always lies, one always tells the truth. You can ask ONE question to ONE guard. What do you ask?",dur:10,tip:'Think about what happens when a liar answers a question about a truth-teller.',share:'Today\'s riddle broke my brain 🤯',free:true},
   {id:15,cat:'think',title:'Opposite Day',prompt:"Pick one strong opinion you hold. Now spend 5 minutes genuinely arguing the opposite position as convincingly as you can. Write it down or say it out loud.",dur:5,tip:'This is how lawyers, debaters, and the sharpest thinkers build their minds.',share:'I just argued against my own opinion 🤔',free:true},
   {id:16,cat:'think',title:'The Ship of Theseus',prompt:"If you replace every plank in a ship one by one, is it still the same ship? Apply this to yourself: almost every cell in your body has been replaced since birth. Are you the same person you were at age 10?",dur:10,tip:'There is no right answer. The quality of your reasoning is the whole point.',share:'The Ship of Theseus got me thinking...',free:true},
   {id:17,cat:'think',title:'Inversion Thinking',prompt:"Pick something you want to achieve. Now ask: what are ALL the ways I could guarantee I FAIL at this? List them seriously. Then invert the list — that is your actual roadmap.",dur:10,tip:'Charlie Munger: Invert, always invert. The best problem-solvers think backwards.',share:'Inversion thinking just reframed my approach to...',free:true},
-  {id:18,cat:'think',title:'Your 5 Assumptions',prompt:"Name 5 things you believe that most people around you don't. Not controversial opinions — genuine beliefs about how the world works that you have arrived at yourself.",dur:10,tip:'Peter Thiel asks this in every interview. The goal is to find people who think for themselves.',share:'One thing I believe that most people don't:',free:true},
+  {id:18,cat:'think',title:'Your 5 Assumptions',prompt:"Name 5 things you believe that most people around you don't. Not controversial opinions — genuine beliefs about how the world works that you have arrived at yourself.",dur:10,tip:'Peter Thiel asks this in every interview. The goal is to find people who think for themselves.',share:'One thing I believe that most people don\'t:',free:true},
   // ── SOUND ──────────────────────────────────────────
   {id:4, cat:'sound',title:'Hum It Back',prompt:"Think of the last song stuck in your head. Hum or whistle just the chorus — right now, out loud. If no one is around: even better.",dur:3,tip:'Notice how music lives in your body without you choosing it.',share:'The song stuck in my head today was... 🎵',free:true},
   {id:24,cat:'sound',title:'Room Sounds',prompt:"Close your eyes for 3 minutes. Count every distinct sound you can hear in your environment. No cheating.",dur:3,tip:'Most people find 5 to 12 sounds they had never noticed.',share:'I heard __ distinct sounds in my room 👂',free:true},
